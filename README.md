@@ -80,7 +80,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/jakob-orel/COVID-in-Prisons_name.git
+   git clone https://github.com/jakoborel/COVID-in-Prisons_name.git
    ```
 2. Install NPM packages
    ```sh
@@ -101,7 +101,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/jakoborel/COVID-in-Prisons/issues) for a list of proposed features (and known issues).
 
 
 
@@ -130,7 +130,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - Jakob Orel - jorel22@cornellcollege.edu
 
-Project Link: [https://github.com/jakob-orel/COVID-in-Prisons](https://github.com/jakob-orel/COVID-in-Prisons)
+Project Link: [https://github.com/jakoborel/COVID-in-Prisons](https://github.com/jakoborel/COVID-in-Prisons)
 
 
 
@@ -147,15 +147,15 @@ Project Link: [https://github.com/jakob-orel/COVID-in-Prisons](https://github.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/jakob-orel/COVID-in-Prisons.svg?style=for-the-badge
-[contributors-url]: https://github.com/jakob-orel/COVID-in-Prisons/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/jakob-orel/COVID-in-Prisons.svg?style=for-the-badge
-[forks-url]: https://github.com/jakob-orel/COVID-in-Prisons/network/members
-[stars-shield]: https://img.shields.io/github/stars/jakob-orel/COVID-in-Prisons.svg?style=for-the-badge
-[stars-url]: https://github.com/jakob-orel/COVID-in-Prisons/stargazers
-[issues-shield]: https://img.shields.io/github/issues/jakob-orel/COVID-in-Prisons.svg?style=for-the-badge
-[issues-url]: https://github.com/jakob-orel/COVID-in-Prisons/issues
-[license-shield]: https://img.shields.io/github/license/jakob-orel/COVID-in-Prisons.svg?style=for-the-badge
-[license-url]: https://github.com/jakob-orel/COVID-in-Prisons/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/jakoborel/COVID-in-Prisons.svg?style=for-the-badge
+[contributors-url]: https://github.com/jakoborel/COVID-in-Prisons/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/jakoborel/COVID-in-Prisons.svg?style=for-the-badge
+[forks-url]: https://github.com/jakoborel/COVID-in-Prisons/network/members
+[stars-shield]: https://img.shields.io/github/stars/jakoborel/COVID-in-Prisons.svg?style=for-the-badge
+[stars-url]: https://github.com/jakoborel/COVID-in-Prisons/stargazers
+[issues-shield]: https://img.shields.io/github/issues/jakoborel/COVID-in-Prisons.svg?style=for-the-badge
+[issues-url]: https://github.com/jakoborel/COVID-in-Prisons/issues
+[license-shield]: https://img.shields.io/github/license/jakoborel/COVID-in-Prisons.svg?style=for-the-badge
+[license-url]: https://github.com/jakoborel/COVID-in-Prisons/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jakob-orel
