@@ -31,15 +31,10 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -47,75 +42,34 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
+\
+[URL:]()
+\
+\
+We analyzed the effect of COVID-19 in the Correctional Facility system of the United States. While analyzing data provided by the UCLA COVID-19 Behind Bars Project we created several interactive Shiny apps in R to allow other users to explore the visualizations. 
 
 
 ### Built With
 
-* []()
-* []()
-* []()
+* [R programming](https://www.r-project.org/about.html)
+* [Shiny R](https://shiny.rstudio.com/)
+* [Carrd.co](https://carrd.co/)
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
+To explore the visualizations navigate to: [URL]()
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/jakoborel/COVID-in-Prisons_name.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/jakoborel/COVID-in-Prisons/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
+If you are interested in cloning the repository and exploring the data further you will need to make sure you install several packages.
+* install.packages("shiny")
+* install.packages("shinydashboard")
+* install.packages("maps")
+* install.packages("dplyr")
+* install.packages("stringr")
 
 
 <!-- LICENSE -->
@@ -128,18 +82,15 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - Jakob Orel - jorel22@cornellcollege.edu
+Jakob Orel - jorel22@cornellcollege.edu
+\
+Danielle Amonica - damonica21@cornellcollege.edu
+\
+Kenna Ebert - kebert22@cornellcollege.edu
+\
+Jonathan Shilyansky - jshilyansky23@cornellcollege.edu
 
 Project Link: [https://github.com/jakoborel/COVID-in-Prisons](https://github.com/jakoborel/COVID-in-Prisons)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
 
 
 
