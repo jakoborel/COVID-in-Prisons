@@ -1,0 +1,166 @@
+---
+title: "Group Project- Exploration"
+author: "Jakob Orel"
+date: "12/6/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+
+# Read in all the csv files
+# Source: UCLA Law Covid-19 Behind Bars Data Project <Professor Sharon Dolovich, Director> 12/2/2020
+adult_counts <- read.csv("data/Jail_Prison_Confirmed_Cases_and_Deaths.csv")
+jail_releases <- read.csv("data/COVID-19_Related_Jail_Releases.csv")
+prison_releases <- read.csv("data/COVID-19_Related_Prison_Releases.csv")
+visitation_policies <- read.csv("data/COVID-19_Visitation_Policy_by_State_(Prisons).csv")
+condition_policies <- read.csv("data/COVID-19_Jail_Prison_Condition_Policies.csv")
+```
+
+## Explore the data
+```{r explore}
+str(adult_counts)
+
+# Convert Date to Date data type
+adult_counts$Date <- as.Date(strptime(adult_counts$Date, format = "%d-%b-%y"))
+class(adult_counts$Date)
+head(adult_counts)
+
+# Summarize the # of Confirmed Resident cases by state
+jp_by_state <- group_by(adult_counts, State)
+summarize(jp_by_state, 
+          min = min(Residents.Confirmed, na.rm = TRUE), 
+          Q1 = quantile(Residents.Confirmed, .25, na.rm = TRUE), 
+          median = median(Residents.Confirmed, na.rm = TRUE), 
+          Q3 = quantile(Residents.Confirmed, .75, na.rm = TRUE), 
+          max = max(Residents.Confirmed, na.rm = TRUE))
+```
+
+```{r facilityMap}
+library(maps)
+MainStates <- map_data("state")
+
+# Create a base map of the Mainland United States
+baseMap <- ggplot() + geom_polygon(data=MainStates, aes(x=long, y=lat, group=group), fill="lightblue", color="white", size=.1)
+baseMap
+
+# Filter for only Mainland facilities to make the map easier to read
+mainlandFacilities <- adult_counts %>% filter(!is.na(Longitude) & Longitude >= -130)
+
+# Add the points for each facility with size as the number of Resident.Confirmed cases
+facilityDotMap <- baseMap + geom_point(data = mainlandFacilities, aes(x=Longitude, y=Latitude, 
+                                    size=Residents.Confirmed), fill="black") +
+  labs(title="Resident Cases in Prisons across the U.S.", x= "", y="")
+facilityDotMap
+
+# Sum the number of resident cases by each state and lowercase state names
+stateResidentCases <- adult_counts %>% group_by(State) %>% summarise(Residents.Confirmed = 
+                                                            sum(Residents.Confirmed, na.rm= TRUE))
+stateResidentCases$State <- tolower(stateResidentCases$State)
+# Merge main state data to include the number of ResidentCases for each state
+mergedStatesResidentCases <- inner_join(MainStates, stateResidentCases, by= c("region" = "State"))
+
+stateCaseMap <- ggplot() + geom_polygon(data=mergedStatesResidentCases, aes(x=long, y=lat, group=group, fill=Residents.Confirmed), color="black", size=.1) + 
+  scale_fill_continuous(name="Resident Cases", low = "lightblue", 
+            high = "darkblue",
+            limits = c(0,30000), breaks=c(5000,10000,15000,20000,25000), 
+            na.value = "grey50") +
+  labs(title="Resident Cases in Prisons across the U.S.", x= "", y="")
+stateCaseMap
+```
+
+```{r stateVsFederal}
+adult_counts$CasesPer1k <- (adult_counts$Residents.Confirmed / adult_counts$Residents.Population) * 1000
+# We noticed a facility with more cases than the number of resident population so lets remove that
+adult_counts <- adult_counts[which(adult_counts$ID != 1198),]
+individual_adult_counts <- adult_counts[which(adult_counts$Name != "STATEWIDE"),]
+
+# Look at Texas State vs Federal Cases
+texasCounts <- individual_adult_counts[which(individual_adult_counts$State == "Texas"),]
+texasPrisons <- texasCounts[which(texasCounts$jurisdiction != "county"),]
+
+ggplot(texasCounts, aes(x=jurisdiction)) + geom_bar()
+
+ggplot(texasPrisons, aes(x=jurisdiction, y=Residents.Confirmed)) + geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Texas", x="Jurisdiction", y="# of Resident Cases")
+table(texasPrisons$jurisdiction) 
+# Look at California State vs Federal Cases
+californiaCounts <- individual_adult_counts[which(individual_adult_counts$State == "California"),]
+californiaPrisons <- californiaCounts[which(californiaCounts$jurisdiction != "county"),]
+
+ggplot(californiaCounts, aes(x=jurisdiction)) + geom_bar()
+
+ggplot(californiaPrisons, aes(x=jurisdiction, y=Residents.Confirmed)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in California", x="Jurisdiction", y="# of Resident Cases")
+table(californiaPrisons$jurisdiction) 
+# Look at National State vs Federal Cases
+allPrisons <- individual_adult_counts[which(individual_adult_counts$jurisdiction != "county"),]
+
+ggplot(adult_counts, aes(x=jurisdiction)) + geom_bar()
+
+ggplot(allPrisons, aes(x=jurisdiction, y=Residents.Confirmed)) + geom_boxplot()
+table(adult_counts$jurisdiction)
+# Lets get rid of the outlier to see more clearly
+# Should we get rid of Statewide totals?
+# Lets get rid of Statewide for boxplots and looking at individual facilities
+# but we should keep them in for summary statistics/totals per state
+allPrisons %>% arrange(desc(Residents.Confirmed))
+allPrisons <- allPrisons[which(allPrisons$Name != "STATEWIDE"),]
+
+# Lets try it again
+ggplot(allPrisons, aes(x=jurisdiction, y=Residents.Confirmed)) + geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases by Type of Facility", x="Jurisdiction", y="# of Resident Cases")
+table(allPrisons$jurisdiction)
+```
+
+```{r explorePrivatePublic}
+floridaCounts <- individual_adult_counts[which(individual_adult_counts$State == "Florida"),]
+floridaPrisons <- floridaCounts[which(floridaCounts$jurisdiction != "county"),]
+
+arizonaCounts <- individual_adult_counts[which(individual_adult_counts$State == "Arizona"),]
+arizonaPrisons <- arizonaCounts[which(arizonaCounts$jurisdiction != "county"),]
+
+# For comparison lets get rid of rows that are not listed as public or private
+floridaPrisons <- floridaPrisons[which(floridaPrisons$Private_Public == "Public" | floridaPrisons$Private_Public == "Private"),]
+californiaPrisons <- californiaPrisons[which(californiaPrisons$Private_Public == "Public" | californiaPrisons$Private_Public == "Private"),]
+texasPrisons <- texasPrisons[which(texasPrisons$Private_Public == "Public" | texasPrisons$Private_Public == "Private"),]
+arizonaPrisons <- arizonaPrisons[which(arizonaPrisons$Private_Public == "Public" | arizonaPrisons$Private_Public == "Private"),]
+
+
+ggplot(californiaPrisons, aes(x=Private_Public, y=Residents.Confirmed)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in California", x="Private/Public", y="# of Resident Cases")
+
+ggplot(texasPrisons, aes(x=Private_Public, y=Residents.Confirmed)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Texas", x="Private/Public", y="# of Resident Cases")
+
+ggplot(floridaPrisons, aes(x=Private_Public, y=Residents.Confirmed)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Florida", x="Private/Public", y="# of Resident Cases")
+
+# Look at cases per 1k in facilities
+ggplot(texasPrisons, aes(x=Private_Public, y=CasesPer1k)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Texas", x="Private/Public", y="# of Resident Cases per 1,000")
+
+# Looks like Florida does not have any of their facility populations listed so this doesn't help us.
+ggplot(floridaPrisons, aes(x=Private_Public, y=CasesPer1k)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Florida", x="Private/Public", y="# of Resident Cases per 1,000")
+
+# Maybe we want to add in Arizona?
+ggplot(arizonaPrisons, aes(x=Private_Public, y=Residents.Confirmed)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Arizona", x="Private/Public", y="# of Resident Cases")
+
+# arizonaPrisonsPerCapita <- arizonaPrisons[which(!is.na(arizonaPrisons$CasesPer1k)),]
+ggplot(arizonaPrisonsPerCapita, aes(x=Private_Public, y=CasesPer1k)) + 
+  geom_boxplot(fill="lightblue") +
+  labs(title="Number of Resident Cases in Arizona", x="Private/Public", y="# of Resident Cases per 1,000")
+# Private prisons in Arizona do not have data on their populations so CasesPer1k is not helpful
+```

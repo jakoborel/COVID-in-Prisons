@@ -1,0 +1,12 @@
+name: COVID-in-Prisons
+title: COVID-in-Prisons
+username:
+account: covid-in-prisons
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3416647
+bundleId: 4007096
+url: https://covid-in-prisons.shinyapps.io/COVID-in-Prisons/
+when: 1608321030.4765
+asMultiple: FALSE
+asStatic: FALSE
