@@ -60,7 +60,7 @@ We analyzed the effect of COVID-19 in the Correctional Facility system of the Un
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To explore the visualizations navigate to: [URL]()
+To explore the visualizations navigate to: [https://covid-in-prisons.shinyapps.io/COVID-in-Prisons/](https://covid-in-prisons.shinyapps.io/COVID-in-Prisons/)
 
 ### Prerequisites
 
