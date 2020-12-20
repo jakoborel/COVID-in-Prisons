@@ -20,7 +20,10 @@ visitation_policies <- read.csv("data/COVID-19_Visitation_Policy_by_State_(Priso
 condition_policies <- read.csv("data/COVID-19_Jail_Prison_Condition_Policies.csv")
 ```
 
-## Explore the data
+## Explore the data 
+\
+Let's start with exploring the structure of the main data file. 
+\
 ```{r explore}
 str(adult_counts)
 
@@ -39,6 +42,10 @@ summarize(jp_by_state,
           max = max(Residents.Confirmed, na.rm = TRUE))
 ```
 
+## Explore the facilities with maps
+\
+Let's look at some visualizations of the data using the maps library to create some heatmaps or dot maps.
+\
 ```{r facilityMap}
 library(maps)
 MainStates <- map_data("state")
@@ -72,6 +79,10 @@ stateCaseMap <- ggplot() + geom_polygon(data=mergedStatesResidentCases, aes(x=lo
 stateCaseMap
 ```
 
+## Explore State vs. Federal Facilities
+\
+Lets see if there is a difference in cases in state or federal prisons.
+\
 ```{r stateVsFederal}
 adult_counts$CasesPer1k <- (adult_counts$Residents.Confirmed / adult_counts$Residents.Population) * 1000
 # We noticed a facility with more cases than the number of resident population so lets remove that
@@ -116,6 +127,9 @@ ggplot(allPrisons, aes(x=jurisdiction, y=Residents.Confirmed)) + geom_boxplot(fi
   labs(title="Number of Resident Cases by Type of Facility", x="Jurisdiction", y="# of Resident Cases")
 table(allPrisons$jurisdiction)
 ```
+## Explore Private vs. Public Facilities
+
+Let's look to see if there is a difference in cases of certain states in public vs. private prisons.
 
 ```{r explorePrivatePublic}
 floridaCounts <- individual_adult_counts[which(individual_adult_counts$State == "Florida"),]
@@ -158,7 +172,7 @@ ggplot(arizonaPrisons, aes(x=Private_Public, y=Residents.Confirmed)) +
   geom_boxplot(fill="lightblue") +
   labs(title="Number of Resident Cases in Arizona", x="Private/Public", y="# of Resident Cases")
 
-# arizonaPrisonsPerCapita <- arizonaPrisons[which(!is.na(arizonaPrisons$CasesPer1k)),]
+arizonaPrisonsPerCapita <- arizonaPrisons[which(!is.na(arizonaPrisons$CasesPer1k)),]
 ggplot(arizonaPrisonsPerCapita, aes(x=Private_Public, y=CasesPer1k)) + 
   geom_boxplot(fill="lightblue") +
   labs(title="Number of Resident Cases in Arizona", x="Private/Public", y="# of Resident Cases per 1,000")
