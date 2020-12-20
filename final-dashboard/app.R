@@ -47,10 +47,11 @@ southeast <- c("West Virginia", "Virginia", "North Carolina", "South Carolina", 
 midwest <- c("North Dakota", "South Dakota", "Nebraska", "Kansas", "Iowa", "Missouri", "Minnesota", "Wisconsin", "Michigan", "Illinois", "Indiana", "Ohio")
 southwest <- c("Arizona", "New Mexico", "Texas", "Oklahoma")
 
-# Define UI for application that draws a histogram
+# Define UI for application that draws the visualizations
 ui <- dashboardPage(skin = "blue",
     dashboardHeader(title = "COVID-19"),
     dashboardSidebar(
+        # Create sidebar tabs for each viz.
         sidebarMenu(
             menuItem("Correctional Facility Heatmaps", tabName = "correctionalFacilities"),
             menuItem("State Prison Heatmaps", tabName= "statePrisons"),
@@ -71,25 +72,30 @@ ui <- dashboardPage(skin = "blue",
                         # Sidebar with a select input for choosing variable 
                         sidebarLayout(
                             sidebarPanel(
+                                # Select variable
                                 selectInput("choice",
                                             "Correctional Facilities Variable: ",
                                             choices = colnames(adult_counts[,c(7:10)])),
+                                # Select genpop variable (cases/deaths)
                                 selectInput("genpopChoice",
                                             "General Population Variable: ",
                                             choices = colnames(general_counts[,c(22,5)])),
+                                # Select metric
                                 radioButtons("metric",
                                              "Metric:",
                                              choices = c("Total", "Per 100k")),
+                                # Select region
                                 radioButtons("region",
                                              "Region:",
                                              choices = c("West", "Southwest", "Midwest", "Northeast", "Southeast", "Nationwide"),
                                              selected = "Nationwide"),
+                                # Show text boxes
                                 textOutput("text1"),
                                 textOutput("text2"),
                                 textOutput("text3")
                             ),
                             
-                            # Show a heat map
+                            # Show heatmaps
                             mainPanel(
                                 plotOutput("heatMap"),
                                 plotOutput("genpopHeatMap")
@@ -106,25 +112,30 @@ ui <- dashboardPage(skin = "blue",
                         # Sidebar with a select input for choosing variable 
                         sidebarLayout(
                             sidebarPanel(
+                                # Select variable
                                 selectInput("statePrisonchoice",
                                             "State Prison Variable: ",
                                             choices = colnames(adult_counts[,c(7:10)])),
+                                # Select genpop variable
                                 selectInput("statePrisongenpopChoice",
                                             "General Population Variable: ",
                                             choices = colnames(general_counts[,c(22,5)])),
+                                # Select metric
                                 radioButtons("statePrisonmetric",
                                              "Metric:",
                                              choices = c("Total", "Per 100k")),
+                                # Select region
                                 radioButtons("statePrisonregion",
                                              "Region:",
                                              choices = c("West", "Southwest", "Midwest", "Northeast", "Southeast", "Nationwide"),
                                              selected = "Nationwide"),
+                                # Show text boxes
                                 textOutput("text4"),
                                 textOutput("text5"),
                                 textOutput("text6")
                             ),
                             
-                            # Show a heat map
+                            # Show heatmaps
                             mainPanel(
                                 plotOutput("statePrisonheatMap"),
                                 plotOutput("statePrisongenpopHeatMap")
@@ -156,6 +167,9 @@ ui <- dashboardPage(skin = "blue",
                             ),
                             
                             # Show the boxplots
+                            # I wanted these boxplots to be responsive and wrap the page.
+                            # I tried fluidPage and fluidRow but plotOutput creates a designated spot for each viz.
+                            # I also tried only plotting one output but then it only shows the last one rendered in the server function
                             mainPanel( 
                                 plotOutput("texasPlot"),
                                 plotOutput("floridaPlot"),
@@ -175,13 +189,16 @@ ui <- dashboardPage(skin = "blue",
                         
                         sidebarLayout(
                             sidebarPanel(
+                                # Select the map variable
                                 selectInput("facilityMapSelect",
                                             "Select a variable:",
                                             choices = colnames(adult_counts[,c(7:10)])),
+                                # Select region
                                 radioButtons("facilityMapregion",
                                              "Region:",
                                              choices = c("West", "Southwest", "Midwest", "Northeast", "Southeast", "Nationwide"),
                                              selected = "Nationwide"),
+                                # Show text boxes
                                 textOutput("text10"),
                                 textOutput("text11")
                             ),
@@ -219,6 +236,8 @@ server <- function(input, output) {
     # Correctional Facilities
     # Heat map for prisons and jails cases/deaths
     output$heatMap <- renderPlot({
+        # This one is not affected by the metric input because we have very limited data on population of facilities.
+        # To remedy this, we found data for state prison populations in each state and made that comparison on the next tab of the dashboard.
         MainStates <- read.csv("data/MainStates.csv")
         # Build map with specific region
         if(input$region == "West"){
@@ -368,12 +387,9 @@ server <- function(input, output) {
             "staffDeathsPer100k"
         }
         
-        # Merge main state data to include the number value for each state
-        #mergedStates<- inner_join(MainStates, states_values, by= c("region" = "State"))
         # if metric == total do total sum values
         if(input$statePrisonmetric == "Total"){
             # Merge main state data to include the number value for each state
-            
             mergedStates<- inner_join(MainStates, states_values, by= c("region" = "State"))
             stateMap <- ggplot() + geom_polygon(data=mergedStates, aes(x=long, y=lat, group=group, fill=SumValue), color="black", size=.1) + 
                 scale_fill_continuous(name=input$statePrisonchoice, low = "lightblue", 
