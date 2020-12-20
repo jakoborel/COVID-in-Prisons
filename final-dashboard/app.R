@@ -9,7 +9,7 @@
 
 library(shiny)
 library(shinydashboard)
-library(maps)
+#library(maps)
 library(dplyr)
 library(stringr)
 library(ggplot2)
@@ -238,6 +238,9 @@ server <- function(input, output) {
     output$heatMap <- renderPlot({
         # This one is not affected by the metric input because we have very limited data on population of facilities.
         # To remedy this, we found data for state prison populations in each state and made that comparison on the next tab of the dashboard.
+        
+        # We originally used map_data to get the basemap data, but this did not work when publishing the Shiny app.
+        # Instead, we wrote the dataframe as a csv and load it that way.
         MainStates <- read.csv("data/MainStates.csv")
         # Build map with specific region
         if(input$region == "West"){
