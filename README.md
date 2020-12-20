@@ -43,7 +43,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 \
-[URL:]()
+[COVID-in-Prisons Website]()
 \
 \
 We analyzed the effect of COVID-19 in the Correctional Facility system of the United States. While analyzing data provided by the UCLA COVID-19 Behind Bars Project we created several interactive Shiny apps in R to allow other users to explore the visualizations. 
@@ -70,6 +70,13 @@ If you are interested in cloning the repository and exploring the data further y
 * install.packages("maps")
 * install.packages("dplyr")
 * install.packages("stringr")
+* install.packages("ggplot2")
+
+The main shiny dashboard application is under "final-dashboard" title "app.r". This file can be opened in Rstudio and run from the client as is. 
+\
+Maps is not needed for running, but it was used to get the initial data. Dplyr and stringr are used for data manipulation. Shiny, shinydashboard, and ggplot2 are used for visualizations.
+\
+The Exploration.Rmd is a markdown file where we did our initial exploration of the data.
 
 
 <!-- LICENSE -->
