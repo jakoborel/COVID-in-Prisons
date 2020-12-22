@@ -44,7 +44,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 \
-[COVID-in-Prisons Website]()
+[COVID-in-Prisons Website](https://covid-in-prisons.carrd.co/)
 \
 \
 We analyzed the effect of COVID-19 in the Correctional Facility system of the United States. While analyzing data provided by the UCLA COVID-19 Behind Bars Project we created several interactive Shiny apps in R to allow other users to explore the visualizations. 
