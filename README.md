@@ -33,6 +33,7 @@
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
+    <li><a href="#future-work">Future Work</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -77,6 +78,14 @@ The main shiny dashboard application is under "final-dashboard" title "app.r". T
 Maps is not needed for running, but it was used to get the initial data. Dplyr and stringr are used for data manipulation. Shiny, shinydashboard, and ggplot2 are used for visualizations.
 \
 The Exploration.Rmd is a markdown file where we did our initial exploration of the data.
+
+<!-- FUTURE -->
+## Future Work
+
+* Gather comprehensive data on all facility populations to use population based rates.
+* Perform regression analysis to see if state prison cases are different from general population cases.
+* Gather data over time for releases in facilities to see effectiveness of releasing inmates and preventing the spread of COVID-19.
+* Gather data for public vs. private prisons to see if our trends follow throughout the U.S.
 
 
 <!-- LICENSE -->
