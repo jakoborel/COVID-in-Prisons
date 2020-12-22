@@ -4,6 +4,7 @@
 #
 # Authors: Jakob Orel, Danielle Amonica, Kenna Ebert, Jonathan Shilyansky
 # Cornell College, Mt.Vernon, IA
+# Date: 12/22/2020
 # 
 # All Source Code: https://github.com/jakoborel/COVID-in-Prisons
 
@@ -14,6 +15,7 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 
+# All data is from 12/02/2020
 # UCLA COVID-19 Behind Bars Project
 adult_counts <- read.csv("data/Jail_Prison_Confirmed_Cases_and_Deaths.csv")
 adult_counts$CasesPer1k <- (adult_counts$Residents.Confirmed / adult_counts$Residents.Population) * 1000
