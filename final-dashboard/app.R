@@ -15,7 +15,7 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 
-# All data is from 12/02/2020
+# Data is from 12/02/2020
 # UCLA COVID-19 Behind Bars Project
 adult_counts <- read.csv("data/Jail_Prison_Confirmed_Cases_and_Deaths.csv")
 adult_counts$CasesPer1k <- (adult_counts$Residents.Confirmed / adult_counts$Residents.Population) * 1000
@@ -23,9 +23,9 @@ adult_counts$ID[is.na(adult_counts$ID)] <- 0
 adult_counts <- adult_counts[which(adult_counts$ID != 1198),]
 individual_adult_counts <- adult_counts[which(adult_counts$Name != "STATEWIDE"),]
 
-# The COVID Tracking Project- Atlantic Monthly
+# The COVID Tracking Project- Atlantic Monthly - 12/2
 general_counts <- read.csv("data/all-states-12:2.csv")
-# U.S. Census Bureau
+# U.S. Census Bureau - 2019
 general_population <- read.csv("data/nst-est2019-alldata.csv")
 # Bureau of Justice Statistics - 2019
 state_prison_population <- read.csv("data/State-Prison-Pop.csv")
